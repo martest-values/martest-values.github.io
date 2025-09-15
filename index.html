@@ -1,23 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>martest values</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 50px; }
-    h1 { color: #333; }
-    a { text-decoration: none; color: blue; }
+    body{font-family:sans-serif;background:#0f172a;color:#e6eef8;padding:20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+    .card{background:#1e293b;padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .food-name{font-weight:700}
+    .food-img{height:72px;width:72px;border-radius:10px;background:#334155;display:flex;align-items:center;justify-content:center;font-size:28px}
+    .value{font-size:18px;font-weight:800}
   </style>
 </head>
-<!-- <body>
-  <h1>Hello, I'm [Your Name]</h1>
-  <p>Welcome to my portfolio website!</p>
-  <h2>Projects</h2>
-  <ul>
-    <li><a href="https://github.com/username/project1">Project 1</a></li>
-    <li><a href="https://github.com/username/project2">Project 2</a></li>
-  </ul>
-  <h2>Contact</h2>
-  <p>Email: you@example.com</p>
-</body> -->
+<body>
+  <h1>martest values</h1>
+  <div class="grid">
+    <div class="card">
+      <div class="food-img">A</div>
+      <div class="food-name">Apple</div>
+      <div class="value">12</div>
+    </div>
+  </div>
+</body>
 </html>
