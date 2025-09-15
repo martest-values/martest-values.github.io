@@ -3,44 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>martest value calculator</title>
+  <title>martest calculator</title>
   <style>
     body{font-family:sans-serif;background:#0f172a;color:#e6eef8;padding:20px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-    .card{background:#1e293b;padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:8px;align-items:center}
-    .food-name{font-weight:700}
-    .food-img{height:72px;width:72px;border-radius:10px;background:#334155;display:flex;align-items:center;justify-content:center;font-size:28px}
-    .value{font-size:18px;font-weight:800}
-    
-  a:link {
-    color: white;
-    background-color: transparent;
-    text-decoration: none;
-  }
-  
-  a:visited {
-    color: white;
-    background-color: transparent;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    color: pink;
-    background-color: transparent;
-    text-decoration: underline;
-  }
-  
-  a:active {
-    color: white;
-    background-color: transparent;
-    text-decoration: underline;
-  }
-    
+    .calculator{display:flex;gap:40px;justify-content:center}
+    .column{background:#1e293b;padding:20px;border-radius:12px;flex:1;max-width:300px}
+    .column h2{text-align:center;margin:0 0 10px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:120px}
+    .slot{background:#334155;border-radius:8px;padding:20px;text-align:center;cursor:pointer}
+    .slot.plus{background:#475569}
+    .total{text-align:center;margin-top:20px;font-weight:700;font-size:18px}
+    .menu{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1e293b;padding:20px;border-radius:12px;max-width:300px}
+    .menu h3{margin-top:0}
+    .menu-item{background:#334155;padding:10px;margin:6px 0;border-radius:8px;cursor:pointer}
+    .menu-item:hover{background:#475569}
   </style>
 </head>
 <body>
   <h1>martest value calculator</h1>
-  <div><a href="https://martest-values.github.io">main values page</a></div>
-  <br>
+  <div class="calculator">
+    <!-- You column -->
+    <div class="column" id="you-col">
+      <h2>You</h2>
+      <div class="grid" id="you-grid">
+        <div class="slot plus" onclick="openMenu('you')">+</div>
+      </div>
+      <div class="total" id="you-total">Total: 0</div>
+    </div>
+
+    <!-- Me column -->
+    <div class="column" id="me-col">
+      <h2>Me</h2>
+      <div class="grid" id="me-grid">
+        <div class="slot plus" onclick="openMenu('me')">+</div>
+      </div>
+      <div class="total" id="me-total">Total: 0</div>
+    </div>
+  </div>
+
+  <!-- Item selection menu -->
+  <div class="menu" id="menu">
+    <h3>Select an item</h3>
+    <div class="menu-item" onclick="addItem('cheese (string)',50)">cheese (string) — 50</div>
+    <div class="menu-item" onclick="addItem('pringle (can)',100)">pringle (can) — 100</div>
+    <div class="menu-item" onclick="addItem('fruit snack (bag)',80)">fruit snack (bag) — 80</div>
+    <div class="menu-item" onclick="addItem('madeline',65)">madeline — 65</div>
+    <div class="menu-item" onclick="addItem('veggie straw (bag)',85)">veggie straw (bag) — 85</div>
+    <div class="menu-item" onclick="addItem('yoggie (bag)',110)">yoggie (bag) — 110</div>
+    <div class="menu-item" onclick="addItem('jerky (bag)',80)">jerky (bag) — 80</div>
+    <button onclick="closeMenu()">Cancel</button>
+  </div>
+
+  <script>
+    let currentColumn = null;
+    let totals = { you: 0, me: 0 };
+
+    function openMenu(column) {
+      currentColumn = column;
+      document.getElementById("menu").style.display = "block";
+    }
+
+    function closeMenu() {
+      document.getElementById("menu").style.display = "none";
+    }
+
+    function addItem(name, value) {
+      let grid = document.getElementById(currentColumn + "-grid");
+      let plus = grid.querySelector(".plus");
+
+      // make slot with item
+      let slot = document.createElement("div");
+      slot.className = "slot";
+      slot.innerHTML = name + "<br><strong>" + value + "</strong>";
+      grid.replaceChild(slot, plus);
+
+      // add new plus button
+      let newPlus = document.createElement("div");
+      newPlus.className = "slot plus";
+      newPlus.textContent = "+";
+      newPlus.onclick = () => openMenu(currentColumn);
+      grid.appendChild(newPlus);
+
+      // update total
+      totals[currentColumn] += value;
+      document.getElementById(currentColumn + "-total").textContent =
+        "Total: " + totals[currentColumn];
+
+      closeMenu();
+    }
+  </script>
 </body>
 </html>
