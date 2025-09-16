@@ -32,12 +32,12 @@
     </div>
 
     <!-- Me column -->
-    <div class="column" id="me-col">
-      <h2>Me</h2>
-      <div class="grid" id="me-grid">
-        <div class="slot plus" onclick="openMenu('me')">+</div>
+    <div class="column" id="them-col">
+      <h2>them</h2>
+      <div class="grid" id="them-grid">
+        <div class="slot plus" onclick="openMenu('them')">+</div>
       </div>
-      <div class="total" id="me-total">Total: 0</div>
+      <div class="total" id="them-total">Total: 0</div>
     </div>
   </div>
 
@@ -56,7 +56,7 @@
 
   <script>
     let currentColumn = null;
-    let totals = { you: 0, me: 0 };
+    let totals = { you: 0, them: 0 };
 
     function openMenu(column) {
       currentColumn = column;
