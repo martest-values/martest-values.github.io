@@ -5,22 +5,119 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>martest calculator</title>
   <style>
-    body{font-family:sans-serif;background:#0f172a;color:#e6eef8;padding:20px}
-    .calculator{display:flex;gap:40px;justify-content:center}
-    .column{background:#1e293b;padding:20px;border-radius:12px;flex:1;max-width:300px}
-    .column h2{text-align:center;margin:0 0 10px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:120px}
-    .slot{background:#334155;border-radius:8px;padding:20px;text-align:center;cursor:pointer}
-    .slot.plus{background:#475569}
-    .total{text-align:center;margin-top:20px;font-weight:700;font-size:18px}
-    .menu{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1e293b;padding:20px;border-radius:12px;max-width:300px}
-    .menu h3{margin-top:0}
-    .menu-item{background:#334155;padding:10px;margin:6px 0;border-radius:8px;cursor:pointer}
-    .menu-item:hover{background:#475569}
+    body {
+      font-family: sans-serif;
+      background: #0f172a;
+      color: #e6eef8;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 6px;
+    }
+    .link-back {
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .link-back a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+    .link-back a:hover {
+      text-decoration: underline;
+    }
+
+    .calculator {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .column {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      flex: 1;
+      max-width: 300px;
+    }
+    .column h2 {
+      text-align: center;
+      margin: 0 0 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      min-height: 120px;
+    }
+    .slot {
+      background: #334155;
+      border-radius: 8px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 14px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    .slot.plus {
+      background: #475569;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .total {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .menu {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 300px;
+      z-index: 100;
+    }
+    .menu h3 {
+      margin-top: 0;
+    }
+    .menu-item {
+      background: #334155;
+      padding: 10px;
+      margin: 6px 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .menu-item:hover {
+      background: #475569;
+    }
+    button {
+      margin-top: 10px;
+      background: #475569;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #64748b;
+    }
   </style>
 </head>
 <body>
   <h1>martest value calculator</h1>
+  <div class="link-back">
+    <a href="https://martest-values.github.io">← back to main values page</a>
+  </div>
+
   <div class="calculator">
     <!-- You column -->
     <div class="column" id="you-col">
@@ -31,9 +128,9 @@
       <div class="total" id="you-total">Total: 0</div>
     </div>
 
-    <!-- Me column -->
+    <!-- Them column -->
     <div class="column" id="them-col">
-      <h2>them</h2>
+      <h2>Them</h2>
       <div class="grid" id="them-grid">
         <div class="slot plus" onclick="openMenu('them')">+</div>
       </div>
@@ -75,6 +172,15 @@
       let slot = document.createElement("div");
       slot.className = "slot";
       slot.innerHTML = name + "<br><strong>" + value + "</strong>";
+
+      // add remove functionality
+      slot.onclick = function() {
+        grid.removeChild(slot);
+        totals[currentColumn] -= value;
+        document.getElementById(currentColumn + "-total").textContent =
+          "Total: " + totals[currentColumn];
+      };
+
       grid.replaceChild(slot, plus);
 
       // add new plus button
